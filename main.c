@@ -52,11 +52,16 @@ int main(int argc, char * argv[])
       effacer_console();
 
       //
-      // Affiche le plateau
-      affiche_plateau(awale);
+      // Affiche l'interface de sortie
+      affiche_interface(awale);
 
-      int d = 0;
-      scanf("%d", &d);
+      //
+      // Affiche l'interface d'entrée utilisateur
+      interface_entree(&awale);
+
+      //
+      // @TODO
+      // Traitement des données...
     }
 
   // Le programme c'est arrêté

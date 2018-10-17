@@ -84,10 +84,11 @@ void affichage_droite_gauche(char * str1, char * str2)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Affiche une bar de séparation
-void affiche_separation_horizontal()
+void affiche_separation_horizontal(unsigned int largeur)
 {
   unsigned int i;
-  for(i = 0;i<largeur_console(); i++)
+  unsigned int vrai_largeur = largeur == 0 ? largeur_console() : largeur;
+  for(i = 0;i<vrai_largeur; i++)
     printf("-");
   printf("\n");
 }
@@ -98,33 +99,35 @@ void affiche_separation_horizontal()
 void afficher_plateau(graine plateau[NOMBRE_JOUEUR][NOMBRE_CASE_JOUEUR])
 {
   // Affiche les cases du joueur 1
-  affichage_centre(" a b c d e f");
-  // Séparation
-  affichage_centre("-------------");
+  affichage_centre("[a] [b] [c] [d] [e] [f]");
 
   // Les differents cases du joueur (avec séprations verticales)
-  char joueur_1_cases[14];
-  char joueur_2_cases[14];
+  char joueur_1_cases[26];
+  char joueur_2_cases[26];
 
   // Format
-  sprintf(joueur_1_cases, "|%d|%d|%d|%d|%d|%d|", plateau[0][0], plateau[0][1], plateau[0][2], plateau[0][3], plateau[0][4], plateau[0][5]);
+  sprintf(joueur_1_cases, "| %d | %d | %d | %d | %d | %d |", plateau[0][0], plateau[0][1], plateau[0][2], plateau[0][3], plateau[0][4], plateau[0][5]);
+
+  // Format des cases du joueur 2
+  sprintf(joueur_2_cases, "| %d | %d | %d | %d | %d | %d |", plateau[1][0], plateau[1][1], plateau[1][2], plateau[1][3], plateau[1][4], plateau[1][5]);
+
+  // Séparation
+  affichage_centre("-------------------------");
 
   // On l'affiche
   affichage_centre(joueur_1_cases);
 
   // On affiche la séparation horizontal
-  affichage_centre("-------------");
-
-  // Format des cases du joueur 2
-  sprintf(joueur_2_cases, "|%d|%d|%d|%d|%d|%d|", plateau[1][0], plateau[1][1], plateau[1][2], plateau[1][3], plateau[1][4], plateau[1][5]);
+  affichage_centre("-------------------------");
 
   // On l'affiche
   affichage_centre(joueur_2_cases);
 
   // On affiche la séparation horizontal
-  affichage_centre("-------------");
+  affichage_centre("-------------------------");
+
   // Affiche les cases du joueur 2
-  affichage_centre(" A B C D E F");
+  affichage_centre("[A] [B] [C] [D] [E] [F]");
 
   // Saute 3 lignes
   printf("\n\n\n");

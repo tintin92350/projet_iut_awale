@@ -31,7 +31,7 @@ void affichage_centre(char *);
 void affichage_droite_gauche(char *, char *);
 
 // Affiche une bar de séparation
-void affiche_separation_horizontal();
+void affiche_separation_horizontal(unsigned int lergeur);
 
 // Affiche le plateau centré
 // @param : ARRAY, Le tableau de graine
