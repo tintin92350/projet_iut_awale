@@ -15,6 +15,7 @@
 // @param : INT, Nombre d'argument passés au programme
 // @param : CHAR[], Arguments sous forme de tableau
 // @return : INT, Retourne un code d'erreur (0 ou 1) selon comment c'est arrêté le programme
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char * argv[])
 {
   // Nettoi la console
