@@ -39,6 +39,6 @@ Cette en-tête contient les inclusions générales de tout les en-têtes nécess
 au programme en générale et au jeu
 
 Le fichier source contient la fonction main() qui va permettre :
--l'initialisation du jeu
--Son introduction
--Le regroupement des fonctionnalités du jeu
+- l'initialisation du jeu
+- Son introduction
+- Le regroupement des fonctionnalités du jeu
