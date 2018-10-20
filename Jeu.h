@@ -22,8 +22,11 @@ typedef struct s_Jeu
   // Joueur en cours
   FLAG joueur;
 
-  // @TODO :
-  // Ajouter des éléments
+  // Case en cour
+  char case_joueur;
+
+  // Score
+  unsigned int scores[NOMBRE_JOUEUR];
 
 } JEU;
 
@@ -62,6 +65,18 @@ void affiche_plateau(JEU);
 // @param : JEU, le jeu en question
 void quitter_le_jeu(JEU *);
 
+// Donne le numéro d'une case
+// par rapport à son numéro ASCII
+// @param char, Case selectionnée
+// @return int, Le numéro de la case
+unsigned int numero_case(const char);
+
+// Fonction jouer
+// Avec des informations correctement vérifié au préalable
+// permet de jouer une case
+// @param jeu
+void jouer_coup(JEU * jeu);
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FONCTIONS DE VERIFICATIONS DES DONNEES
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,5 +94,17 @@ FLAG case_est_au_joueur(const char, const FLAG);
 // @return : FLAG, Retourne une valeur boolean par rapport aux tests
 FLAG case_est_valide(const char);
 
+// Vérifie si la case demandée est vide
+// @param 2d-array, plateau du jeu
+// @param char, L'entrée utilisateur à tester
+// @param int, Joueur qui joue
+// @return : FLAG, Retourne une valeur boolean par rapport aux tests
+FLAG case_est_vide(const graine plateau[2][6], const char, const unsigned int);
+
+// Vérifie si le joueur à gagné selon
+// quelques règles
+// @param : Jeu
+// @return : FLAG
+FLAG joueur_a_gagner(const JEU jeu);
 
 #endif // Jeu

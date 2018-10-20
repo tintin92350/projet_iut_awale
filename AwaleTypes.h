@@ -6,7 +6,7 @@
 
 // Type utilisé pour définir
 // une graine dans un plateau
-typedef short unsigned int graine;
+typedef short int graine;
 
 // Type utilisé pour définit un etat
 // boolean ou d'une limite en valeur faible

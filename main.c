@@ -15,7 +15,6 @@
 // @param : INT, Nombre d'argument passés au programme
 // @param : CHAR[], Arguments sous forme de tableau
 // @return : INT, Retourne un code d'erreur (0 ou 1) selon comment c'est arrêté le programme
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char * argv[])
 {
   // Nettoi la console
@@ -61,8 +60,23 @@ int main(int argc, char * argv[])
       interface_entree(&awale);
 
       //
-      // @TODO
-      // Traitement des données...
+      // Joue le coup
+      jouer_coup(&awale);
+
+      //
+      // Vérifie si le joueur a plus
+      // ou moins gagné
+      if(joueur_a_gagner(awale))
+        {
+          quitter_le_jeu(&awale);
+          printf("Le joueur %d à gagné avec un score de %d !\n", awale.joueur, awale.scores[awale.joueur]);
+        }
+      else
+        {
+          //
+          // On passe au joueur suivant
+          awale.joueur = (awale.joueur + 1) % 2;
+        }
     }
 
   // Le programme c'est arrêté

@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <time.h>
 
 // Types utilisés dans le Awalé
 #include "AwaleTypes.h"
