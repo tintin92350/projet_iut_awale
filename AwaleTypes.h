@@ -1,15 +1,19 @@
 //
 // AwaleTypes.h
-// Ensemble des types utilisé spécialement pour le Awalé
-#ifndef __AWALE_TYPES_HEADER_FILE__
-#define  __AWALE_TYPES_HEADER_FILE__
+// Définit tout les types utilisés par le jeu
+#ifndef __AWALE_TYPES_HEADERFILE__
+#define __AWALE_TYPES_HEADERFILE__
 
-// Type utilisé pour définir
-// une graine dans un plateau
-typedef short unsigned int graine;
-
-// Type utilisé pour définit un etat
-// boolean ou d'une limite en valeur faible
+// FLAG et BOOL
 typedef short unsigned int FLAG;
+typedef short unsigned int BOOL;
 
-#endif // Awalé Types header file
+// Définit le type boolean
+// (valeurs)
+#define TRUE 1
+#define FALSE 0
+
+// Chaine de caractere
+typedef char * string;
+
+#endif

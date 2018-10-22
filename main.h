@@ -1,21 +1,21 @@
 //
-// Main.h
-// Regroupe l'ensemble des fichiers header du programme nécessaire en globalité
-#ifndef __MAIN_HEADER_FILE__
-#define __MAIN_HEADER_FILE__
+// main.h
+// Fichier d'en-tête inculant tout les autres fichiers nécessaire
+// à la compilation globale
+#ifndef __MAIN_HEADERFILE__
+#define __MAIN_HEADERFILE__
 
-// Bibliothèque standard du C
+// Bibliothèque standard C
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/ioctl.h>
 #include <unistd.h>
 #include <string.h>
+
+// Bibliothèque UNIX
+#include <sys/ioctl.h>
 #include <sys/wait.h>
 
-// Types utilisés dans le Awalé
-#include "AwaleTypes.h"
+// Debug mode
+#define DEBUG 0
 
-// Constantes utilisés dans le Awalé
-#include "AwaleConstantes.h"
-
-#endif // Main header file
+#endif
