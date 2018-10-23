@@ -16,7 +16,7 @@
  * Afficher le score des joueurs
  * @param unsigned int[2], Les scores des joueurs
  */
-void afficher_scores(const unsigned int scores[2])
+void afficher_scores(unsigned int scores[2])
 {
     // Chaine de caractere des scores
     char score_j1[25];
@@ -104,7 +104,7 @@ Emplacement jouer_coup(int plateau[2][6], const Emplacement empGraines)
  * @param unsigned int, Le joueur qui vient de jouer
  * @return unsigned int, Le nombre de graine obtenue
  */
-unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines, const unsigned int joueur)
+unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines,   unsigned int joueur)
 {
     // Nombre de graine prise
     unsigned int nbr_graine_prise = 0;
@@ -135,7 +135,7 @@ unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines, const u
  * @param unsigned int, Joueur actuel
  * @return unsigned int, Joueur suivant
  */
-unsigned int joueur_suivant(const unsigned int joueur)
+unsigned int joueur_suivant(  unsigned int joueur)
 {
     return (joueur + 1) % 2;
 }
@@ -149,7 +149,7 @@ unsigned int joueur_suivant(const unsigned int joueur)
  * @param char, Le caractère à convertir
  * @return int, Renvoie la coordonnée ou -1 (erreur)
  */
-int conversion_char_vers_coordonnee_x(const char entree)
+int conversion_char_vers_coordonnee_x(char entree)
 {
     // On convertit si l'entrée correspond au joueur 1
     if(entree >= 'a' && entree <= 'f')
@@ -171,7 +171,7 @@ int conversion_char_vers_coordonnee_x(const char entree)
  * @param char, l'entrée utilisateur
  * @return BOOL
  */
-BOOL entree_utilisateur_est_standard(const char entree)
+BOOL entree_utilisateur_est_standard(char entree)
 {
     return conversion_char_vers_coordonnee_x(entree) >= 0;
 }
@@ -182,7 +182,7 @@ BOOL entree_utilisateur_est_standard(const char entree)
  * @param unsigned int, Utilisateur en question
  * @return BOOL
  */
-BOOL entree_appartient_a_utilisateur(const char entree, const unsigned int joueur)
+BOOL entree_appartient_a_utilisateur(char entree,  unsigned int joueur)
 {
     // On vérifie qu'il sagit bien de la case de l'utilisateur
     if((joueur == JOUEUR_1 && (entree >= 'a' && entree <= 'f')) || (joueur == JOUEUR_2 && (entree >= 'A' && entree <= 'F')))
@@ -202,7 +202,7 @@ BOOL entree_appartient_a_utilisateur(const char entree, const unsigned int joueu
  * @param AwalePartie, Partie en cours
  * @return BOOL
  */
-BOOL entree_respecte_regles(const char entree, const unsigned int joueur, const int plateau[2][6], const BOOL joueur_suivant_famine, AwalePartie * partie)
+BOOL entree_respecte_regles(  char entree,   unsigned int joueur,   int plateau[2][6],   BOOL joueur_suivant_famine, AwalePartie * partie)
 {
     // 1. L'entrée doit être conforme, c'est-à-dire comprise entre "a" et "f"
     // et "A" et "F"
@@ -257,7 +257,7 @@ BOOL entree_respecte_regles(const char entree, const unsigned int joueur, const 
  * @param unsigned int, Le joueur qui vient de jouer
  * @return BOOL
  */
-BOOL emplacement_est_ramassable(const int plateau[2][6], const Emplacement emp, const unsigned int joueur)
+BOOL emplacement_est_ramassable(  int plateau[2][6],   Emplacement emp,   unsigned int joueur)
 {
     return emp.y != joueur && (plateau[emp.y][emp.x] == 2 || plateau[emp.y][emp.x] == 3);
 }
@@ -268,7 +268,7 @@ BOOL emplacement_est_ramassable(const int plateau[2][6], const Emplacement emp, 
  * @param Plateau - 2Dimensions, Le plateau de jeu
  * @param unsigned int, Le joueur qui vient de jouer 
  */
-BOOL joueur_en_famine(const int plateau[2][6], const unsigned int joueur)
+BOOL joueur_en_famine(  int plateau[2][6],   unsigned int joueur)
 {
     return plateau_ligne_est_vide(plateau, joueur);
 }
@@ -280,7 +280,7 @@ BOOL joueur_en_famine(const int plateau[2][6], const unsigned int joueur)
  * @param unsigned int, Le joueur qui vient de jouer 
  * @return BOOL
  */
-BOOL joueur_peut_nourrire(const int plateau[2][6], const unsigned int joueur)
+BOOL joueur_peut_nourrire(  int plateau[2][6],   unsigned int joueur)
 {
     if(joueur == JOUEUR_1)
     {
@@ -304,7 +304,7 @@ BOOL joueur_peut_nourrire(const int plateau[2][6], const unsigned int joueur)
  * @param unsigned int, Le joueur qui vient de jouer 
  * @param Emplacement, l'emplacement à tester
  */
-BOOL joueur_peut_jouer_cette_case_famine(const int plateau[2][6], const unsigned int joueur, const Emplacement emp)
+BOOL joueur_peut_jouer_cette_case_famine(  int plateau[2][6],   unsigned int joueur,   Emplacement emp)
 {
     if(joueur == JOUEUR_1 && emp.x - plateau[joueur][emp.x] < 0)
             return TRUE;

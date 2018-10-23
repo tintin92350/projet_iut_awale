@@ -19,7 +19,7 @@
  * Afficher le score des joueurs
  * @param unsigned int[2], Les scores des joueurs
  */
-void afficher_scores(const unsigned int scores[2]);
+void afficher_scores(unsigned int scores[2]);
 
 /*******************************************************************************
  * FONCTIONS DU JEU
@@ -38,7 +38,7 @@ Emplacement demande_emplacement_au_joueur(AwalePartie * partie);
  * @param Emplacement, L'emplacement où prendre les graines
  * @return Emplacement, Renvoi la dernière case
  */
-Emplacement jouer_coup(int plateau[2][6], const Emplacement empGraines);
+Emplacement jouer_coup(int plateau[2][6], Emplacement empGraines);
 
 /**
  * Fonction qui ramasse si possible les graines
@@ -47,14 +47,14 @@ Emplacement jouer_coup(int plateau[2][6], const Emplacement empGraines);
  * @param unsigned int, Le joueur qui vient de jouer
  * @return unsigned int, Le nombre de graine obtenue
  */
-unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines, const unsigned int joueur);
+unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines, unsigned int joueur);
 
 /**
  * Fonction qui renvoi le joueur suivant
  * @param unsigned int, Joueur actuel
  * @return unsigned int, Joueur suivant
  */
-unsigned int joueur_suivant(const unsigned int joueur);
+unsigned int joueur_suivant(unsigned int joueur);
 
 /*******************************************************************************
  * FONCTIONS DE CONVERSION
@@ -65,7 +65,7 @@ unsigned int joueur_suivant(const unsigned int joueur);
  * @param char, Le caractère à convertir
  * @return int, Renvoie la coordonnée ou -1 (erreur)
  */
-int conversion_char_vers_coordonnee_x(const char entree);
+int conversion_char_vers_coordonnee_x(char entree);
 
 /*******************************************************************************
  * FONCTIONS DE VERIFICATION
@@ -76,7 +76,7 @@ int conversion_char_vers_coordonnee_x(const char entree);
  * @param char, l'entrée utilisateur
  * @return BOOL
  */
-BOOL entree_utilisateur_est_standard(const char entree);
+BOOL entree_utilisateur_est_standard(char entree);
 
 /**
  * Vérifie si la case entrée par l'utilisateur lui appartient
@@ -96,7 +96,7 @@ BOOL entree_appartient_a_utilisateur(const char entree, const unsigned int joueu
  * @param AwalePartie, Partie en cours
  * @return BOOL
  */
-BOOL entree_respecte_regles(const char entree, const unsigned int joueur, const int plateau[2][6], const BOOL joueur_suivant_famine, AwalePartie * awale);
+BOOL entree_respecte_regles(char entree, unsigned int joueur, int plateau[2][6], BOOL joueur_suivant_famine, AwalePartie * awale);
 
 /**
  * Vérifie si l'emplacement est propice à un ramassage
@@ -105,7 +105,7 @@ BOOL entree_respecte_regles(const char entree, const unsigned int joueur, const 
  * @param unsigned int, Le joueur qui vient de jouer
  * @return BOOL
  */
-BOOL emplacement_est_ramassable(const int plateau[2][6], const Emplacement emp, const unsigned int joueur);
+BOOL emplacement_est_ramassable(int plateau[2][6], Emplacement emp, unsigned int joueur);
 
 /**
  * Vérifie si le joueur j est en famine
@@ -113,7 +113,7 @@ BOOL emplacement_est_ramassable(const int plateau[2][6], const Emplacement emp, 
  * @param unsigned int, Le joueur qui vient de jouer 
  * @return BOOL
  */
-BOOL joueur_en_famine(const int plateau[2][6], const unsigned int joueur);
+BOOL joueur_en_famine(int plateau[2][6], unsigned int joueur);
 
 /**
  * Vérifie si un joueur peut nourrie son adversaire
@@ -121,7 +121,7 @@ BOOL joueur_en_famine(const int plateau[2][6], const unsigned int joueur);
  * @param unsigned int, Le joueur qui vient de jouer 
  * @return BOOL
  */
-BOOL joueur_peut_nourrire(const int plateau[2][6], const unsigned int joueur);
+BOOL joueur_peut_nourrire(int plateau[2][6], unsigned int joueur);
 
 /**
  * Vérifie en cas de famine si le joueur peut jouer cette case
@@ -129,6 +129,6 @@ BOOL joueur_peut_nourrire(const int plateau[2][6], const unsigned int joueur);
  * @param unsigned int, Le joueur qui vient de jouer 
  * @param Emplacement, l'emplacement à tester
  */
-BOOL joueur_peut_jouer_cette_case_famine(const int plateau[2][6], const unsigned int joueur, const Emplacement emp);
+BOOL joueur_peut_jouer_cette_case_famine(int plateau[2][6], unsigned int joueur, Emplacement emp);
 
 #endif

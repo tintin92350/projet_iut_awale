@@ -23,7 +23,7 @@ void plateau_defaut(int plateau[2][6])
  * Fonction qui dessiner dans la console un plateau
  * @param Plateau - 2Dimensions, Le plateau à dessiner
  */
-void afficher_plateau(const int plateau[2][6])
+void afficher_plateau(int plateau[2][6])
 {
     // Saute 3 lignes
     printf("\n\n\n");
@@ -68,7 +68,7 @@ void afficher_plateau(const int plateau[2][6])
  * @param Emplacement, Emplacement où chercher
  * @return int, Le nombre de graine (-1 si l'emplacement est non-valide)
  */
-int recupere_nombre_graine(const int plateau[2][6], const Emplacement emp)
+int recupere_nombre_graine(int plateau[2][6], Emplacement emp)
 {
     // Deja on teste si l'emplacement n'est pas valide
     // (pas de dépassement de mémoire)
@@ -87,7 +87,7 @@ int recupere_nombre_graine(const int plateau[2][6], const Emplacement emp)
  * @param Emplacement, Emplacement où insérer
  * @return BOOL, Renvoie faux si la fonction échoue sinon vraie
  */
-BOOL ajouter_graine(int plateau[2][6], const Emplacement emp, const unsigned int n)
+BOOL ajouter_graine(int plateau[2][6], Emplacement emp, unsigned int n)
 {
     // Deja on teste si l'emplacement n'est pas valide
     // (pas de dépassement de mémoire)
@@ -109,7 +109,7 @@ BOOL ajouter_graine(int plateau[2][6], const Emplacement emp, const unsigned int
  * @param Emplacement, Emplacement où prendre
  * @return BOOL, Renvoie faux si la fonction échoue sinon vraie
  */
-BOOL enlever_graine(int plateau[2][6], const Emplacement emp, const unsigned int n)
+BOOL enlever_graine(int plateau[2][6], Emplacement emp, unsigned int n)
 {
     // Deja on teste si l'emplacement n'est pas valide
     // (pas de dépassement de mémoire)
@@ -140,7 +140,7 @@ BOOL enlever_graine(int plateau[2][6], const Emplacement emp, const unsigned int
  * @param Emplacement, L'emplacement a tester
  * @return BOOL
  */
-BOOL emplacement_est_valide(const Emplacement emp)
+BOOL emplacement_est_valide(Emplacement emp)
 {
     return (emp.x >= 0 && emp.x <= 5) && (emp.y >= 0 && emp.y <= 1);
 }
@@ -150,7 +150,7 @@ BOOL emplacement_est_valide(const Emplacement emp)
  * @param Emplacement, L'emplacement a tester
  * @return BOOL
  */
-BOOL emplacement_est_vide(const int plateau[2][6], const Emplacement emp)
+BOOL emplacement_est_vide(int plateau[2][6], Emplacement emp)
 {
     return emplacement_est_valide(emp) && (plateau[emp.y][emp.x] == 0);
 }
@@ -161,7 +161,7 @@ BOOL emplacement_est_vide(const int plateau[2][6], const Emplacement emp)
  * @param unsigned int, Ligne en question
  * @return BOOL
  */
-BOOL plateau_ligne_est_vide(const int plateau[2][6], const unsigned int ligne)
+BOOL plateau_ligne_est_vide(int plateau[2][6], unsigned int ligne)
 {
     return plateau[ligne][0] == 0 && plateau[ligne][1] == 0 && plateau[ligne][2] == 0 && plateau[ligne][3] == 0 && plateau[ligne][4] == 0 && plateau[ligne][5] == 0;
 }

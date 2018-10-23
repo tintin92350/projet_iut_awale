@@ -22,7 +22,7 @@ void plateau_defaut(int plateau[2][6]);
  * Fonction qui dessiner dans la console un plateau
  * @param Plateau - 2Dimensions, Le plateau à dessiner
  */
-void afficher_plateau(const int plateau[2][6]);
+void afficher_plateau(int plateau[2][6]);
 
 /**
  * Fonction qui renvoie le nombre de graine dans une case (valide)
@@ -30,7 +30,7 @@ void afficher_plateau(const int plateau[2][6]);
  * @param Emplacement, Emplacement où chercher
  * @return int, Le nombre de graine (-1 si l'emplacement est non-valide)
  */
-int recupere_nombre_graine(const int plateau[2][6], const Emplacement emp);
+int recupere_nombre_graine(int plateau[2][6], Emplacement emp);
 
 /**
  * Fonction qui ajoute une graine à un emplacement
@@ -39,7 +39,7 @@ int recupere_nombre_graine(const int plateau[2][6], const Emplacement emp);
  * @param unsigned int, Nombre de graine a ajouter
  * @return BOOL, Renvoie faux si la fonction échoue sinon vraie
  */
-BOOL ajouter_graine(int plateau[2][6], const Emplacement emp, const unsigned int n);
+BOOL ajouter_graine(int plateau[2][6], Emplacement emp, unsigned int n);
 
 
 /**
@@ -49,7 +49,7 @@ BOOL ajouter_graine(int plateau[2][6], const Emplacement emp, const unsigned int
  * @param unsigned int, Nombre de graine a enlever
  * @return BOOL, Renvoie faux si la fonction échoue sinon vraie
  */
-BOOL enlever_graine(int plateau[2][6], const Emplacement emp, const unsigned int n);
+BOOL enlever_graine(int plateau[2][6], Emplacement emp, unsigned int n);
 
 
 /*******************************************************************************
@@ -61,7 +61,7 @@ BOOL enlever_graine(int plateau[2][6], const Emplacement emp, const unsigned int
  * @param Emplacement, L'emplacement a tester
  * @return BOOL
  */
-BOOL emplacement_est_valide(const Emplacement emp);
+BOOL emplacement_est_valide( Emplacement emp);
 
 /**
  * Teste si un emplacement est vide
@@ -69,7 +69,7 @@ BOOL emplacement_est_valide(const Emplacement emp);
  * @param Emplacement, L'emplacement a tester
  * @return BOOL
  */
-BOOL emplacement_est_vide(const int plateau[2][6], const Emplacement emp);
+BOOL emplacement_est_vide(int plateau[2][6], Emplacement emp);
 
 /**
  * Teste si la ligne n est vide
@@ -77,6 +77,6 @@ BOOL emplacement_est_vide(const int plateau[2][6], const Emplacement emp);
  * @param unsigned int, Ligne en question
  * @return BOOL
  */
-BOOL plateau_ligne_est_vide(const int plateau[2][6], const unsigned int ligne);
+BOOL plateau_ligne_est_vide( int plateau[2][6],  unsigned int ligne);
 
 #endif
