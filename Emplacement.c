@@ -9,7 +9,7 @@
  * @param int, Coordonnée en y
  * @return Emplacement, l'emplacement à créer
  */
-Emplacement emplacement_defaut(const int x, const int y)
+Emplacement emplacement_defaut(int x, int y)
 {
     return (Emplacement) {x, y};
 }
@@ -85,7 +85,7 @@ Emplacement emplacement_precedent(Emplacement emp_actuel)
  * @param Emplacement, l'emplacement actuel
  * @return int, La direction (-1 | 1)
  */
-int direction(const Emplacement emp_actuel)
+int direction(Emplacement emp_actuel)
 {
     return emp_actuel.y == 0 ? -1 : 1;
 }
@@ -100,7 +100,7 @@ int direction(const Emplacement emp_actuel)
  * @param Emplacement, l'enmplacement numéro 2
  * @return BOOL
  */
-BOOL emplacement_sont_les_memes(const Emplacement emp1, const Emplacement emp2)
+BOOL emplacement_sont_les_memes(Emplacement emp1, Emplacement emp2)
 {
     return (emp1.x == emp2.x) && (emp1.y == emp2.y);
 }

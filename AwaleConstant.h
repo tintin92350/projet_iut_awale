@@ -7,10 +7,18 @@
 // Définit les joueurs (ID)
 #define JOUEUR_1 0
 #define JOUEUR_2 1
+#define JOUEUR_IA JOUEUR_1
 
 // Etat du jeu possibles
-#define ETAT_JOUE 1
-#define ETAT_QUITTER 0
+#define ETAT_JOUER_CVSC 1
+#define ETAT_JOUER_CVSIA 2
+#define ETAT_JOUER_PARTIEENR 3
+#define ETAT_JOUER_LAN 4
+#define ETAT_HALLOFFAME 5
+#define ETAT_QUITTER 6
+
+// Maximum constantes
+#define STRING_MAX_CHAR 250
 
 // Couleurs du terminale disponibles
 #define RED   "\x1B[31m"

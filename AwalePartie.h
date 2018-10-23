@@ -34,8 +34,8 @@ typedef struct s_AwalePartie
     // Stock l'etat famine des joueurs
     BOOL famines[2];
 
-    // Etat du jeu
-    FLAG etat_du_jeu;
+    // Type de partie (etat...)
+    FLAG type;
 
 } AwalePartie;
 
@@ -44,28 +44,34 @@ typedef struct s_AwalePartie
  ******************************************************************************/
 
 /**
- * Créer une nouvelle partie
- * @return AwalePartie, renvoi la partie crée
+ * Charger une partie sauvegardée
+ * @return AwalePartie, la partie sauvegardée OU une nouvelle partie si inexistante
  */
-AwalePartie creer_partie();
+AwalePartie charger_partie();
 
 /**
- * Quitte le jeu (met l'état à QUITTER)
- * @param AwalePartie, Pointeur vers la partie
+ * Créer une nouvelle partie
+ * @param unsigned int, Le type de partie
+ * @return AwalePartie, renvoi la partie crée
  */
-void quitter_partie(AwalePartie * partie);
+AwalePartie creer_partie(unsigned int type);
 
 /**
  * Affiche le dernier coup joué par un joueur
  * @param AwalePartie, Partie en cours
  */
-void afficher_dernier_coup_joue(const AwalePartie partie);
+void afficher_dernier_coup_joue(AwalePartie partie);
+
+/*******************************************************************************
+ * FONCTIONS DE VERIFICATION
+ ******************************************************************************/
 
 /**
- * La partie est toujours en train de continuer
- * @parm AwalePartie, la partie en cours
- * @return FLAG, l'etat du jeu est JOUER
+ * Vérifie si le joueur n est en famine
+ * @param AwalePartie, Partie en cours
+ * @param unsigned int, Le joueur
+ * @return BOOL
  */
-FLAG est_en_execution(const AwalePartie partie);
+BOOL joueur_est_en_famine(AwalePartie partie, unsigned int joueur);
 
 #endif

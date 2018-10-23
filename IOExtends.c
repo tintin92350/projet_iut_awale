@@ -30,7 +30,7 @@ unsigned int largeur_console()
  * Affiche un text brut de facon centré sur la console
  * @param string, la chaine de caractère à afficher
  */
-void affichage_centre(const string str)
+void affichage_centre(string str)
 {
     // Récupère le nombre de caractere de la chaine
     unsigned int chaine_taille = strlen(str);
@@ -59,7 +59,7 @@ void affichage_centre(const string str)
  * @param string, première chaine de caractère (gauche)
  * @param string, deuxième chaine de caractère (droite)
  */
-void affichage_droite_gauche(const string str1, const string str2)
+void affichage_droite_gauche(string str1, string str2)
 {
     // On vérifie si la taille additionné
     // des deux chaines ne dépasse pas
@@ -106,6 +106,40 @@ void effacer_console()
 }
 
 
+/**
+ * Change le text de couleur
+ * @param string, Couleur à mettre
+ */
+void changer_couleur_terminal(const string c)
+{
+    printf("%s", c);
+}
+
+/**
+ * Réinitialisation de la couleur du terminal
+ */
+void reinitialiser_couleur_terminal()
+{
+    printf("\x1B[0m");
+}
+
+/**
+ * Demande de certitude
+ * @return BOOL
+ */
+BOOL demande_confirmation()
+{
+    printf("Voulez-vous vraiment faire cela ?\n");
+    char confirmation[STRING_MAX_CHAR] = "";
+
+    do {
+        scanf("%s", confirmation);
+    }
+    while(strlen(confirmation) == 0 && confirmation[0] != 'o' && confirmation[0] != 'y');
+
+    return confirmation[0] == 'o';
+}
+
 /*******************************************************************************
  * FONCTIONS SUR FICHIERS
  ******************************************************************************/
@@ -116,7 +150,7 @@ void effacer_console()
  * @param AwalePartie, Partie à enregistrer
  * @return BOOL, La fonction a t-elle bien enregistrer la partie
  */
-BOOL enregistrer_partie(const string name, AwalePartie * partie)
+BOOL enregistrer_partie(string name, AwalePartie * partie)
 {
     // Create the file in binary mode
     FILE * fichier_partie = fopen(name, "wb");
@@ -143,7 +177,7 @@ BOOL enregistrer_partie(const string name, AwalePartie * partie)
  * @param AwalePartie, Partie à enregistrer
  * @return BOOL, La fonction a t-elle bien enregistrer la partie
  */
-BOOL recuperer_partie(const string name, AwalePartie * partie)
+BOOL recuperer_partie(string name, AwalePartie * partie)
 {
     // Create the file in binary mode
     FILE * fichier_partie = fopen(name, "rb");
@@ -170,7 +204,7 @@ BOOL recuperer_partie(const string name, AwalePartie * partie)
  * @param unsigned int, Score
  * @return BOOL
  */
-BOOL enregistre_score(const string name, unsigned int joueur, unsigned int score)
+BOOL enregistre_score(string name, unsigned int joueur, unsigned int score)
 {
     // Create the file in binary mode
     FILE * fichier_score = fopen(name, "w");
@@ -199,7 +233,7 @@ BOOL enregistre_score(const string name, unsigned int joueur, unsigned int score
  * @param string, Nom du fichier
  * @return BOOL
  */
-BOOL fichier_exist(const string name)
+BOOL fichier_exist(string name)
 {    
     // Ouvre le fichier
     FILE * fichier = fopen(name, "r");

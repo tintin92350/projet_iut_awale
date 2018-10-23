@@ -61,7 +61,7 @@ BOOL enlever_graine(int plateau[2][6], Emplacement emp, unsigned int n);
  * @param Emplacement, L'emplacement a tester
  * @return BOOL
  */
-BOOL emplacement_est_valide( Emplacement emp);
+BOOL emplacement_est_valide(Emplacement emp);
 
 /**
  * Teste si un emplacement est vide
@@ -77,6 +77,6 @@ BOOL emplacement_est_vide(int plateau[2][6], Emplacement emp);
  * @param unsigned int, Ligne en question
  * @return BOOL
  */
-BOOL plateau_ligne_est_vide( int plateau[2][6],  unsigned int ligne);
+BOOL plateau_ligne_est_vide(int plateau[2][6], unsigned int ligne);
 
 #endif

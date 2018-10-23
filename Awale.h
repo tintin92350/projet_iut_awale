@@ -38,7 +38,7 @@ Emplacement demande_emplacement_au_joueur(AwalePartie * partie);
  * @param Emplacement, L'emplacement où prendre les graines
  * @return Emplacement, Renvoi la dernière case
  */
-Emplacement jouer_coup(int plateau[2][6], Emplacement empGraines);
+Emplacement deplacer_graines(int plateau[2][6], Emplacement empGraines);
 
 /**
  * Fonction qui ramasse si possible les graines
@@ -55,6 +55,23 @@ unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines, unsigne
  * @return unsigned int, Joueur suivant
  */
 unsigned int joueur_suivant(unsigned int joueur);
+
+/**
+ * Fin de partie - Effectue les instructions nécessaire à la fin de partie
+ * C'est à dire affichage des scores, qui a gagné, enregistrement des meilleurs
+ * scores, etc.
+ * @param unsigned int, Joueur qui a gagné
+ * @param unsigned int[], Scores des joueurs
+ */
+void fin_de_partie(AwalePartie partie, unsigned int joueur, unsigned int scores[2]);
+
+/**
+ * Récupère le nombre de graine que je peux ramasser à partie d'un emplacement
+ * @param Plateau - 2Dimensions, Le plateau de jeu
+ * @param Emplacement, L'emplacement à vérifier
+ * @return unsigned int, Le nombre de graine que je peu ramasser
+ */
+unsigned int nombre_de_graine_ramassable(int plateau[2][6], Emplacement);
 
 /*******************************************************************************
  * FONCTIONS DE CONVERSION
@@ -84,7 +101,7 @@ BOOL entree_utilisateur_est_standard(char entree);
  * @param unsigned int, Utilisateur en question
  * @return BOOL
  */
-BOOL entree_appartient_a_utilisateur(const char entree, const unsigned int joueur);
+BOOL entree_appartient_a_utilisateur(char entree, unsigned int joueur);
 
 /**
  * Vérifie si la case entrée par l'utilisateur respecte toute les règles

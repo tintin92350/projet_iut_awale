@@ -7,6 +7,7 @@
 #include "AwaleConstant.h"
 #include "IOExtends.h"
 #include "Plateau.h"
+#include "HallOfFame.h"
 
 /*******************************************************************************
  * FONCTIONS D'AFFICHAGE DES INFORMATIONS
@@ -44,23 +45,61 @@ void afficher_scores(unsigned int scores[2])
  */
 Emplacement demande_emplacement_au_joueur(AwalePartie * partie)
 {
-    // L'emplacement souhaité
-    // en caractère
-    char emplacement_demande[10];
+    // On vérifie si le jeu est de type Ordinateur VS Ordinateur
+    // ou Ordinateur VS Ordinateur (LAN)
+    if(partie->joueur != JOUEUR_IA || partie->type == ETAT_JOUER_CVSC || partie->type == ETAT_JOUER_LAN)
+        {
+            // L'emplacement souhaité
+            // en caractère
+            char emplacement_demande[10];
 
-    // On demande de l'entrée
-    // tant qu'elle n'est pas valide !
-    do {
-        printf("%sJoueur %d%s$ ", partie->joueur == 0 ? RED : GRN, partie->joueur + 1, RESET);
-        scanf(" %s", emplacement_demande);
-    }
-    while(!entree_respecte_regles(emplacement_demande[0], partie->joueur, partie->plateau, partie->famines[joueur_suivant(partie->joueur)], partie));
+            // On demande de l'entrée
+            // tant qu'elle n'est pas valide !
+            do {
+                printf("%sJoueur %d%s$ ", partie->joueur == 0 ? RED : GRN, partie->joueur + 1, RESET);
+                scanf(" %s", emplacement_demande);
+            }
+            while(!entree_respecte_regles(emplacement_demande[0], partie->joueur, partie->plateau, partie->famines[joueur_suivant(partie->joueur)], partie));
 
-    // On convertit la coordonnée x de l'emplacement demandé
-    int cx = conversion_char_vers_coordonnee_x(emplacement_demande[0]);
+            // On convertit la coordonnée x de l'emplacement demandé
+            int cx = conversion_char_vers_coordonnee_x(emplacement_demande[0]);
 
-    // On renvoi l'emplacement
-    return emplacement_defaut(cx, partie->joueur);
+            // On renvoi l'emplacement
+            return emplacement_defaut(cx, partie->joueur);
+        }
+    else
+        {
+            int emp_max_graine = 0, empx = -1;
+            Emplacement emp;
+            for(unsigned int e = 0; e < 6; e++)
+                {
+                    emp = emplacement_defaut(e, JOUEUR_IA);
+                    unsigned int nbr_graine = recupere_nombre_graine(partie->plateau, emplacement_defaut(e, JOUEUR_IA));
+
+                    if(nbr_graine > 0)
+                        {
+                            for(;nbr_graine > 0; nbr_graine--)
+                                emp = emplacement_suivant(emp);
+                            unsigned int nbr_graine_ramassable = nombre_de_graine_ramassable(partie->plateau, emp);
+
+                            if(nbr_graine_ramassable > emp_max_graine)
+                                {
+                                    empx = e;
+                                    emp_max_graine = nbr_graine_ramassable;
+                                }
+                        }
+                }
+
+            if(emp_max_graine > 0)
+                    return emplacement_defaut(empx, JOUEUR_IA);
+            do {
+                emp = emplacement_defaut(rand() % 6, JOUEUR_IA);
+            }
+            
+            while(emplacement_est_vide(partie->plateau, emp));
+
+            return emp;
+        }
 }
 
 /**
@@ -68,7 +107,7 @@ Emplacement demande_emplacement_au_joueur(AwalePartie * partie)
  * @param Plateau - 2Dimensions, Le plateau de jeu
  * @param Emplacement, L'emplacement où prendre les graines
  */
-Emplacement jouer_coup(int plateau[2][6], const Emplacement empGraines)
+Emplacement deplacer_graines(int plateau[2][6], Emplacement empGraines)
 {
     // Emplacement où déposer les graines
     Emplacement emp = empGraines;
@@ -104,7 +143,7 @@ Emplacement jouer_coup(int plateau[2][6], const Emplacement empGraines)
  * @param unsigned int, Le joueur qui vient de jouer
  * @return unsigned int, Le nombre de graine obtenue
  */
-unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines,   unsigned int joueur)
+unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines, unsigned int joueur)
 {
     // Nombre de graine prise
     unsigned int nbr_graine_prise = 0;
@@ -112,7 +151,6 @@ unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines,   unsig
     // On sait qu'on a au moin une possiblité
     while(emplacement_est_ramassable(plateau, empGraines, joueur))
         {
-            printf("peut rammasser\n");
             // On recupere combient il y a de graine a prendre
             unsigned int nbr_graine = recupere_nombre_graine(plateau, empGraines);
             
@@ -135,9 +173,92 @@ unsigned int ramasser_graines(int plateau[2][6], Emplacement empGraines,   unsig
  * @param unsigned int, Joueur actuel
  * @return unsigned int, Joueur suivant
  */
-unsigned int joueur_suivant(  unsigned int joueur)
+unsigned int joueur_suivant(unsigned int joueur)
 {
     return (joueur + 1) % 2;
+}
+
+/**
+ * Fin de partie - Effectue les instructions nécessaire à la fin de partie
+ * C'est à dire affichage des scores, qui a gagné, enregistrement des meilleurs
+ * scores, etc.
+ * @param unsigned int, Joueur qui a gagné
+ * @param unsigned int[], Scores des joueurs
+ */
+void fin_de_partie(AwalePartie partie, unsigned int joueur, unsigned int scores[2])
+{
+    // On imprime les scores dans une chaine
+    // de caractère adaptée
+    char score_text[2][STRING_MAX_CHAR];
+    sprintf(score_text[0], "Le joueur 1 a récupéré %d graines", scores[0]);
+    sprintf(score_text[1], "Le joueur 2 a récupéré %d graines", scores[1]);
+
+    // On affiche les scores
+    // au centre de la console
+    affichage_centre(score_text[0]);
+    affichage_centre(score_text[1]);
+
+    // Indique quel joueur a gagné
+    affichage_centre("Et le gagnant est bien entendu...");
+    sleep(2);
+
+    // On affiche le texte en vert
+    changer_couleur_terminal(GRN);
+
+    // Affichage du gagnant
+    char gagnant[STRING_MAX_CHAR];
+    sprintf(gagnant, "Le joueur %d", joueur);
+    affichage_centre(gagnant);
+
+    // On réaffiche en blanc (reset)
+    reinitialiser_couleur_terminal();
+
+    if(!(partie.type == ETAT_JOUER_CVSIA && joueur == JOUEUR_IA))
+        {
+            // On récupère les meilleurs scores
+            HallOfFame hof = recuperer_les_meilleurs_scores();
+
+            // On récupère la positions du score
+            // (si le socre est assez élevé)
+            int position = compare_score_halloffame(hof, scores[joueur]);
+
+            // Si le score est assez elevé on le met dans l'ajoute
+            if(position >= 0)
+                {
+                    // Demande le nom du joueur qui a gagné
+                    char nom_joueurs[STRING_MAX_CHAR];
+
+                    printf("Joueur, veuillez indiquer votre nom : \n");
+                    do {
+                        scanf("%s", nom_joueurs);
+                    }
+                    while(demande_confirmation());
+
+                    ajouter_score_a_la_liste(&hof, position, scores[joueur], "NON");
+                }
+
+            // On met à jour le fichier
+            maj_halloffame(hof);
+        }
+}
+
+/**
+ * Récupère le nombre de graine que je peux ramasser à partie d'un emplacement
+ * @param Plateau - 2Dimensions, Le plateau de jeu
+ * @param Emplacement, L'emplacement à vérifier
+ * @return unsigned int, Le nombre de graine que je peu ramasser
+ */
+unsigned int nombre_de_graine_ramassable(int plateau[2][6], Emplacement emp)
+{
+    unsigned int nbr = 0;
+
+    while(recupere_nombre_graine(plateau, emp) == 2 || recupere_nombre_graine(plateau, emp) == 3)
+        {
+            nbr++;
+            emp = emplacement_precedent(emp);
+        }
+
+    return nbr;
 }
 
 /*******************************************************************************
@@ -182,7 +303,7 @@ BOOL entree_utilisateur_est_standard(char entree)
  * @param unsigned int, Utilisateur en question
  * @return BOOL
  */
-BOOL entree_appartient_a_utilisateur(char entree,  unsigned int joueur)
+BOOL entree_appartient_a_utilisateur(char entree, unsigned int joueur)
 {
     // On vérifie qu'il sagit bien de la case de l'utilisateur
     if((joueur == JOUEUR_1 && (entree >= 'a' && entree <= 'f')) || (joueur == JOUEUR_2 && (entree >= 'A' && entree <= 'F')))
@@ -202,17 +323,24 @@ BOOL entree_appartient_a_utilisateur(char entree,  unsigned int joueur)
  * @param AwalePartie, Partie en cours
  * @return BOOL
  */
-BOOL entree_respecte_regles(  char entree,   unsigned int joueur,   int plateau[2][6],   BOOL joueur_suivant_famine, AwalePartie * partie)
+BOOL entree_respecte_regles(char entree, unsigned int joueur, int plateau[2][6], BOOL joueur_suivant_famine, AwalePartie * partie)
 {
     // 1. L'entrée doit être conforme, c'est-à-dire comprise entre "a" et "f"
     // et "A" et "F"
     if(!entree_utilisateur_est_standard(entree))
         {
             if(entree == 's')
-                if(enregistrer_partie("save", partie))
-                    printf("La partie à été sauvegardée !\n");
-
-            printf("Attention l'entree n'est pas standard !\n");
+                {
+                    if(enregistrer_partie("save", partie))
+                        printf("La partie à été sauvegardée !\n");
+                }
+            else if(entree == 'q')
+                {
+                }
+            else
+                {
+                    printf("Attention l'entree n'est pas standard !\n");
+                }
             return FALSE;
         }
 
@@ -257,7 +385,7 @@ BOOL entree_respecte_regles(  char entree,   unsigned int joueur,   int plateau[
  * @param unsigned int, Le joueur qui vient de jouer
  * @return BOOL
  */
-BOOL emplacement_est_ramassable(  int plateau[2][6],   Emplacement emp,   unsigned int joueur)
+BOOL emplacement_est_ramassable(int plateau[2][6], Emplacement emp, unsigned int joueur)
 {
     return emp.y != joueur && (plateau[emp.y][emp.x] == 2 || plateau[emp.y][emp.x] == 3);
 }
@@ -268,7 +396,7 @@ BOOL emplacement_est_ramassable(  int plateau[2][6],   Emplacement emp,   unsign
  * @param Plateau - 2Dimensions, Le plateau de jeu
  * @param unsigned int, Le joueur qui vient de jouer 
  */
-BOOL joueur_en_famine(  int plateau[2][6],   unsigned int joueur)
+BOOL joueur_en_famine(int plateau[2][6], unsigned int joueur)
 {
     return plateau_ligne_est_vide(plateau, joueur);
 }
@@ -280,7 +408,7 @@ BOOL joueur_en_famine(  int plateau[2][6],   unsigned int joueur)
  * @param unsigned int, Le joueur qui vient de jouer 
  * @return BOOL
  */
-BOOL joueur_peut_nourrire(  int plateau[2][6],   unsigned int joueur)
+BOOL joueur_peut_nourrire(int plateau[2][6], unsigned int joueur)
 {
     if(joueur == JOUEUR_1)
     {
@@ -304,7 +432,7 @@ BOOL joueur_peut_nourrire(  int plateau[2][6],   unsigned int joueur)
  * @param unsigned int, Le joueur qui vient de jouer 
  * @param Emplacement, l'emplacement à tester
  */
-BOOL joueur_peut_jouer_cette_case_famine(  int plateau[2][6],   unsigned int joueur,   Emplacement emp)
+BOOL joueur_peut_jouer_cette_case_famine(int plateau[2][6], unsigned int joueur, Emplacement emp)
 {
     if(joueur == JOUEUR_1 && emp.x - plateau[joueur][emp.x] < 0)
             return TRUE;
